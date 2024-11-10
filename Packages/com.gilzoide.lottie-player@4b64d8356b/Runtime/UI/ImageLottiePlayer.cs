@@ -60,7 +60,7 @@ namespace Gilzoide.LottiePlayer
         {
             DestroyImmediate(_texture);
             // Disposeすると落ちる
-            //_animation.Dispose();
+            _animation.Dispose();
             base.OnDestroy();
         }
 
@@ -151,7 +151,7 @@ namespace Gilzoide.LottiePlayer
 
             if (!_animation.IsValid())
             {
-                _animation = _animationAsset.CreateNativeAnimation();
+                _animation = CreateNativeAnimation(_animationAsset);
             }
             if (_texture == null
                 || _width != _texture.width
@@ -183,6 +183,25 @@ namespace Gilzoide.LottiePlayer
             _lastRenderedFrame = _currentFrame;
             _renderJobHandle.Complete();
             _texture.Apply(true);
+        }
+
+        private NativeLottieAnimation CreateNativeAnimation(LottieAnimationAsset asset)
+        {
+            return new NativeLottieAnimation(asset.Json, asset.CacheKey, asset.ResourcePath);
+        }
+
+        public bool UpdateMetadata(NativeLottieAnimation animation)
+        {
+            if (animation.IsCreated)
+            {
+                // _size = animation.GetSize();
+                // _frameCount = animation.GetTotalFrame();
+                // _frameRate = animation.GetFrameRate();
+                // _duration = animation.GetDuration();
+                return true;
+            }
+
+            return false;
         }
 
 #if UNITY_EDITOR

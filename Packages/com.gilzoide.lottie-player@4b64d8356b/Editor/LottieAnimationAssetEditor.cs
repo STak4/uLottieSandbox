@@ -11,7 +11,8 @@ namespace Gilzoide.LottiePlayer.Editor
 
         void OnEnable()
         {
-            _animation = ((LottieAnimationAsset) target).CreateNativeAnimation();
+            var asset = (LottieAnimationAsset)target;
+            _animation = new NativeLottieAnimation(asset.Json, asset.CacheKey, asset.ResourcePath);
             _texture = _animation.CreateTexture();
         }
 

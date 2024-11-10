@@ -46,30 +46,23 @@ namespace Gilzoide.LottiePlayer
         public double FrameRate => _frameRate;
         public double Duration => _duration;
 
-        public LottieAnimation CreateAnimation()
-        {
-            return new LottieAnimation(Json, CacheKey, ResourcePath);
-        }
-
-        public NativeLottieAnimation CreateNativeAnimation()
-        {
-            return new NativeLottieAnimation(Json, CacheKey, ResourcePath);
-        }
 
         public bool UpdateMetadata()
         {
-            using (var animation = CreateNativeAnimation())
-            if (animation.IsCreated)
+            using (var animation = new NativeLottieAnimation(Json, CacheKey, ResourcePath))
             {
-                _size = animation.GetSize();
-                _frameCount = animation.GetTotalFrame();
-                _frameRate = animation.GetFrameRate();
-                _duration = animation.GetDuration();
-                return true;
-            }
-            else
-            {
-                return false;
+                if (animation.IsCreated)
+                {
+                    _size = animation.GetSize();
+                    _frameCount = animation.GetTotalFrame();
+                    _frameRate = animation.GetFrameRate();
+                    _duration = animation.GetDuration();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
     }
