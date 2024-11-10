@@ -143,7 +143,7 @@ namespace Gilzoide.LottiePlayer
             {
                 return;
             }
-            else if (_animationAsset.CacheKey != _lastAnimationAssetCacheKey)
+            else if (_animationAsset.CacheKey != _lastAnimationAssetCacheKey && _animation.IsValid())
             {
                 _animation.Dispose();
                 _lastAnimationAssetCacheKey = _animationAsset.CacheKey;
