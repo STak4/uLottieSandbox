@@ -59,7 +59,8 @@ namespace Gilzoide.LottiePlayer
         protected override void OnDestroy()
         {
             DestroyImmediate(_texture);
-            _animation.Dispose();
+            // Disposeすると落ちる
+            //_animation.Dispose();
             base.OnDestroy();
         }
 
