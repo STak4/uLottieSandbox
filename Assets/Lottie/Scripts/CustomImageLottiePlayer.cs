@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Jobs;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Gilzoide.LottiePlayer
@@ -10,8 +11,9 @@ namespace Gilzoide.LottiePlayer
     [RequireComponent(typeof(CanvasRenderer))]
     public class CustomImageLottiePlayer : MaskableGraphic
     {
+        [FormerlySerializedAs("_animationAsset")]
         [Header("Animation Options")] 
-        [SerializeField] protected TextAsset _animationAsset;
+        [SerializeField] protected string _animationPath;
         [SerializeField] protected AutoPlayEvent _autoPlay = AutoPlayEvent.OnStart;
         [SerializeField] protected bool _loop = true;
 
@@ -27,9 +29,6 @@ namespace Gilzoide.LottiePlayer
         protected uint _lastRenderedFrame = 0;
         protected JobHandle _renderJobHandle;
         protected Coroutine _playCoroutine;
-
-        private string _cacheKey = string.Empty;
-        private string _lastAnimationAssetCacheKey;
 
         public override Texture mainTexture => _texture;
 
@@ -146,20 +145,17 @@ namespace Gilzoide.LottiePlayer
 
         protected void RecreateAnimationIfNeeded()
         {
-            Debug.Log($"[Debug][ImageLottiePlayer] Anim valid?:{_animation.IsValid()},  Cache:{_cacheKey}, Last:{_lastAnimationAssetCacheKey}");
-            if (_animationAsset == null) return;
+            Debug.Log($"[Debug][ImageLottiePlayer] Anim valid?:{_animation.IsValid()}");
+            if (_animationPath == null) return;
             
-            if (_cacheKey != _lastAnimationAssetCacheKey && _animation.IsValid())
+            if (_animation.IsValid())
             {
                 _animation.Dispose();
-                _lastAnimationAssetCacheKey = _cacheKey;
             }
 
             if (!_animation.IsValid())
             {
-                _cacheKey = Guid.NewGuid().ToString();
-                _animation = new LottieAnimation(_animationAsset.text, _cacheKey,
-                    _animationAsset.name);
+                _animation = new LottieAnimation(_animationPath);
             }
             if (_texture == null
                 || _width != _texture.width
@@ -222,10 +218,9 @@ namespace Gilzoide.LottiePlayer
             }
         }
 #endif
-        
-        public void SetAsset(TextAsset asset)
+        public void SetPath(string path)
         {
-            _animationAsset = asset;
+            _animationPath = path;
             RecreateAnimationIfNeeded();
         }
     }

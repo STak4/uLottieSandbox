@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEngine;
 
@@ -16,9 +17,9 @@ namespace Gilzoide.LottiePlayer
 
             if(GUI.changed)
             {
-                if (so.jsonFile != null)
+                if (!string.IsNullOrEmpty(so.ResourcePath) || so.jsonFile != null)
                 {
-                    so.LoadFile();
+                    EditorCoroutineUtility.StartCoroutineOwnerless(so.LoadFile());
                 }
             }
         }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Gilzoide.LottiePlayer;
 using TMPro;
 using UnityEngine;
@@ -8,9 +9,9 @@ using UnityEngine.UI;
 public class LottieDropdownView : MonoBehaviour
 {
     [SerializeField] private TMP_Dropdown dropDown;
-    [SerializeField] private List<CustomLottieAnimationAsset> lottieAssets;
+    [SerializeField] private LottieJsonList lottieJsons;
 
-    public CustomLottieAnimationAsset Current => lottieAssets[dropDown.value];
+    public string Current =>Path.Combine(Application.streamingAssetsPath, lottieJsons.JsonFiles[dropDown.value]);
 
     // Start is called before the first frame update
     void Start()
@@ -21,9 +22,9 @@ public class LottieDropdownView : MonoBehaviour
     public void UpdateView()
     {
         var lotties = new List<string>();
-        foreach (var asset in lottieAssets)
+        foreach (var path in lottieJsons.JsonFiles)
         {
-            lotties.Add(asset.jsonFile.name);
+            lotties.Add(Path.GetFileNameWithoutExtension(path));
         }
         SetOptions(lotties);
     }
