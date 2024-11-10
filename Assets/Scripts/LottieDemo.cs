@@ -32,7 +32,7 @@ public class LottieDemo : MonoBehaviour
     {
         var newPlayer = Instantiate(playerPrefab, playerParent);
         var asset = dropDown.Current;
-        newPlayer.SetAsset(asset);
+        newPlayer.SetAsset(asset.jsonFile);
         StartCoroutine(PlayRoutine(newPlayer));
         OnUpdateList();
     }
@@ -41,10 +41,10 @@ public class LottieDemo : MonoBehaviour
     {
         if (playerParent.childCount > 0)
         {
-            var last = playerParent.GetComponentsInChildren<ImageLottiePlayer>(false)?.LastOrDefault();
-            //var last = playerParent.transform.GetChild(playerParent.transform.childCount - 1);
-            //DestroyImmediate(last.gameObject);
-            last?.gameObject.SetActive(false);
+            //var last = playerParent.GetComponentsInChildren<ImageLottiePlayer>(false)?.LastOrDefault();
+            var last = playerParent.transform.GetChild(playerParent.transform.childCount - 1);
+            DestroyImmediate(last.gameObject);
+            //last?.gameObject.SetActive(false);
         }
         OnUpdateList();
     }
@@ -56,7 +56,7 @@ public class LottieDemo : MonoBehaviour
 
     private void UpdateCounts()
     {
-        var counts = playerParent.GetComponentsInChildren<ImageLottiePlayer>().Length;
+        var counts = playerParent.GetComponentsInChildren<CustomImageLottiePlayer>().Length;
         countText.text = $"Counts:{counts.ToString()}";
     }
 
