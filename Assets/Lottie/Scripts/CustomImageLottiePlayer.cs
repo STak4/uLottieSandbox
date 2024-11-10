@@ -95,6 +95,7 @@ namespace Gilzoide.LottiePlayer
         [ContextMenu("Play")]
         public void Play(float startTime = 0)
         {
+            Debug.Log($"[ImageLottiePlayer] Play");
             Pause();
             _time = startTime;
             Unpause();
@@ -163,6 +164,7 @@ namespace Gilzoide.LottiePlayer
             {
                 DestroyImmediate(_texture);
                 _texture = _animation.CreateTexture(_width, _height, true);
+                Debug.Log($"[Debug][ImageLottiePlayer] texture created");
             }
 
             if (!Application.isPlaying)
@@ -221,7 +223,7 @@ namespace Gilzoide.LottiePlayer
         public void SetPath(string path)
         {
             _animationPath = path;
-            RecreateAnimationIfNeeded();
+            //RecreateAnimationIfNeeded();
         }
     }
 

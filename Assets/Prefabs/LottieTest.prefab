@@ -65,8 +65,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  _animationAsset: {fileID: 11400000, guid: 26cb7ae6ce7a60d41a7a80f11c562527, type: 2}
-  _autoPlay: 0
+  _animationPath: 
+  _autoPlay: 2
   _loop: 1
   _width: 1024
   _height: 1024
