@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
     "com.gilzoide.lottie-player": "https://github.com/STak4/unity-lottie-player.git",
     "com.tayx.graphy": "https://github.com/Tayx94/graphy.git",
     "com.unity.burst": "1.8.18",

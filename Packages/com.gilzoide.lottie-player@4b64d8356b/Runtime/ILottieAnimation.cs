@@ -89,6 +89,7 @@ namespace Gilzoide.LottiePlayer
             }
             unsafe
             {
+                // GetUnsafePtrが遅い
                 animation.Render(frameNum, width, height, (Color32*) buffer.GetUnsafePtr(), bytesPerLine ?? (uint) buffer.Length / width, keepAspectRatio);
             }
         }

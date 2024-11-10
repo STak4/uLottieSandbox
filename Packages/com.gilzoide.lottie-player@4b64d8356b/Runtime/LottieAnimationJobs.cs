@@ -30,6 +30,7 @@ namespace Gilzoide.LottiePlayer
         private uint? BytesPerLine;
         private bool KeepAspectRatio;
 
+        // texture.GetRawTextureData<Color32>()が遅い
         public LottieAnimationRenderJob(NativeLottieAnimation animation, uint frameNum, Texture2D texture, bool keepAspectRatio = true)
             : this(animation, frameNum, (uint) texture.width, (uint) texture.height, texture.GetRawTextureData<Color32>(), (uint) texture.width * (uint) UnsafeUtility.SizeOf<Color32>(), keepAspectRatio)
         {

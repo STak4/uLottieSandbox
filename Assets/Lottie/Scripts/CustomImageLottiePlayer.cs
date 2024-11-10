@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using Unity.Jobs;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -28,11 +30,13 @@ namespace Gilzoide.LottiePlayer
         protected uint _currentFrame = 0;
         protected uint _lastRenderedFrame = 0;
         protected JobHandle _renderJobHandle;
-        protected Coroutine _playCoroutine;
 
         public override Texture mainTexture => _texture;
 
-        public bool IsPlaying => _playCoroutine != null;
+        private bool isPlaying = false;
+        public bool IsPlaying => isPlaying;
+
+        private CancellationTokenSource _tokenSource;
 
         protected override void OnEnable()
         {
@@ -104,11 +108,8 @@ namespace Gilzoide.LottiePlayer
         [ContextMenu("Pause")]
         public void Pause()
         {
-            if (_playCoroutine != null)
-            {
-                StopCoroutine(_playCoroutine);
-                _playCoroutine = null;
-            }
+            _tokenSource?.Cancel();
+            isPlaying = false;
         }
 
         [ContextMenu("Unpause")]
@@ -116,24 +117,30 @@ namespace Gilzoide.LottiePlayer
         {
             if (!IsPlaying && _animation.IsValid())
             {
-                _playCoroutine = StartCoroutine(PlayRoutine());
+                _tokenSource?.Cancel();
+                _tokenSource = new CancellationTokenSource();
+                PlayRoutine(_tokenSource.Token).Forget();
             }
         }
 
-        protected IEnumerator PlayRoutine()
+        protected async UniTaskVoid PlayRoutine(CancellationToken token = default)
         {
+            isPlaying = true;
+            
             // force render first frame
             _lastRenderedFrame = uint.MaxValue;
-
+            
             float duration = (float) _animation.GetDuration();
-            while (_loop || _time < duration)
+            
+            while (!token.IsCancellationRequested &&(_loop || _time < duration))
             {
                 _currentFrame = _animation.GetFrameAtTime(_time, _loop);
                 if (_currentFrame != _lastRenderedFrame)
                 {
                     ScheduleRenderJob(_currentFrame);
                 }
-                yield return null;
+
+                await UniTask.DelayFrame(1, cancellationToken: token);
                 _time += Time.deltaTime;
                 if (_currentFrame != _lastRenderedFrame)
                 {
@@ -141,7 +148,7 @@ namespace Gilzoide.LottiePlayer
                 }
             }
             CompleteRenderJob();
-            _playCoroutine = null;
+            isPlaying = false;
         }
 
         protected void RecreateAnimationIfNeeded()

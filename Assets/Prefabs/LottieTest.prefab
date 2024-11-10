@@ -68,6 +68,6 @@ MonoBehaviour:
   _animationPath: 
   _autoPlay: 2
   _loop: 1
-  _width: 1024
-  _height: 1024
+  _width: 128
+  _height: 128
   _keepAspect: 1
