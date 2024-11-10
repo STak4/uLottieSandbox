@@ -41,10 +41,10 @@ public class LottieDemo : MonoBehaviour
     {
         if (playerParent.childCount > 0)
         {
-            var last = playerParent.GetComponentsInChildren<CustomImageLottiePlayer>(false)?.LastOrDefault();
-            //var last = playerParent.transform.GetChild(playerParent.transform.childCount - 1);
-            //DestroyImmediate(last.gameObject);
-            last?.gameObject.SetActive(false);
+            var last = playerParent.transform.GetChild(playerParent.transform.childCount - 1);
+            Destroy(last.gameObject);
+            //var last = playerParent.GetComponentsInChildren<CustomImageLottiePlayer>(false)?.LastOrDefault();
+            //last?.gameObject.SetActive(false);
         }
         OnUpdateList();
     }

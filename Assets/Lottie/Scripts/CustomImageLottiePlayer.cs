@@ -146,11 +146,10 @@ namespace Gilzoide.LottiePlayer
 
         protected void RecreateAnimationIfNeeded()
         {
-            if (!_animationAsset)
-            {
-                return;
-            }
-            else if (_cacheKey != _lastAnimationAssetCacheKey && _animation.IsValid())
+            Debug.Log($"[Debug][ImageLottiePlayer] Anim valid?:{_animation.IsValid()},  Cache:{_cacheKey}, Last:{_lastAnimationAssetCacheKey}");
+            if (_animationAsset == null) return;
+            
+            if (_cacheKey != _lastAnimationAssetCacheKey && _animation.IsValid())
             {
                 _animation.Dispose();
                 _lastAnimationAssetCacheKey = _cacheKey;
@@ -158,7 +157,8 @@ namespace Gilzoide.LottiePlayer
 
             if (!_animation.IsValid())
             {
-                _animation = new LottieAnimation(_animationAsset.text, Guid.NewGuid().ToString(),
+                _cacheKey = Guid.NewGuid().ToString();
+                _animation = new LottieAnimation(_animationAsset.text, _cacheKey,
                     _animationAsset.name);
             }
             if (_texture == null
