@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.gilzoide.lottie-player": "https://github.com/gilzoide/unity-lottie-player.git#1.0.1",
+    "com.gilzoide.lottie-player": "https://github.com/STak4/unity-lottie-player.git",
     "com.tayx.graphy": "https://github.com/Tayx94/graphy.git",
     "com.unity.burst": "1.8.18",
     "com.unity.collab-proxy": "2.5.2",
