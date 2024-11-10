@@ -1,11 +1,10 @@
 {
   "dependencies": {
     "com.gilzoide.lottie-player": {
-      "version": "https://github.com/gilzoide/unity-lottie-player.git#1.0.1",
+      "version": "file:com.gilzoide.lottie-player@4b64d8356b",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "a5c5ab9c3ca6a655637a063b9e3238c364bef85d"
+      "source": "embedded",
+      "dependencies": {}
     },
     "com.tayx.graphy": {
       "version": "https://github.com/Tayx94/graphy.git",
