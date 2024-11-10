@@ -19,7 +19,7 @@ namespace Gilzoide.LottiePlayer
         [SerializeField] protected bool _keepAspect = true;
 
         protected Texture2D _texture;
-        protected NativeLottieAnimation _animation;
+        protected LottieAnimation _animation;
         protected float _time = 0;
         protected uint _currentFrame = 0;
         protected uint _lastRenderedFrame = 0;
@@ -151,7 +151,8 @@ namespace Gilzoide.LottiePlayer
 
             if (!_animation.IsValid())
             {
-                _animation = CreateNativeAnimation(_animationAsset);
+                _animation = new LottieAnimation(_animationAsset.Json, _animationAsset.CacheKey,
+                    _animationAsset.ResourcePath);
             }
             if (_texture == null
                 || _width != _texture.width
@@ -175,7 +176,7 @@ namespace Gilzoide.LottiePlayer
 
         protected void ScheduleRenderJob(uint frame)
         {
-            _renderJobHandle = _animation.CreateRenderJob(frame, _texture, keepAspectRatio: false).Schedule();
+            _renderJobHandle = _animation.NativeHandle.CreateRenderJob(frame, _texture, keepAspectRatio: false).Schedule();
         }
 
         protected void CompleteRenderJob()

@@ -9,7 +9,7 @@ namespace Gilzoide.LottiePlayer
         public void SetAsset(LottieAnimationAsset asset)
         {
             _animationAsset = asset;
-            RecreateAnimationIfNeeded();
+            //RecreateAnimationIfNeeded();
         }
     }
 

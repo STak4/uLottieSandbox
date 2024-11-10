@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Gilzoide.LottiePlayer;
+using Gilzoide.LottiePlayer.RLottie;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,8 +41,10 @@ public class LottieDemo : MonoBehaviour
     {
         if (playerParent.childCount > 0)
         {
-            var last = playerParent.transform.GetChild(playerParent.transform.childCount - 1);
-            DestroyImmediate(last.gameObject);
+            var last = playerParent.GetComponentsInChildren<ImageLottiePlayer>(false)?.LastOrDefault();
+            //var last = playerParent.transform.GetChild(playerParent.transform.childCount - 1);
+            //DestroyImmediate(last.gameObject);
+            last?.gameObject.SetActive(false);
         }
         OnUpdateList();
     }
