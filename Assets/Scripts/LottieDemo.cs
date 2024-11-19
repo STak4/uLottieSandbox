@@ -32,7 +32,7 @@ public class LottieDemo : MonoBehaviour
     {
         var newPlayer = Instantiate(playerPrefab, playerParent);
         newPlayer.gameObject.SetActive(false);
-        var asset = dropDown.Current;
+        var asset = dropDown.CurrentFile;
         newPlayer.SetPath(asset);
         StartCoroutine(PlayRoutine(newPlayer));
         OnUpdateList();

@@ -232,6 +232,16 @@ namespace Gilzoide.LottiePlayer
             _animationPath = path;
             //RecreateAnimationIfNeeded();
         }
+
+        public void SetSize(int size)
+        {
+            SetSize(size,size);
+        }
+        public void SetSize(int width, int height)
+        {
+            _width = width;
+            _height = height;
+        }
     }
 
 }
