@@ -65,7 +65,9 @@ namespace Gilzoide.LottiePlayer
 
         protected override void OnDestroy()
         {
-            DestroyImmediate(_texture);
+            _tokenSource?.Cancel();
+            _renderJobHandle.Complete();
+            Destroy(_texture);
             // Disposeすると落ちる
             if (_animation.IsValid())
             {
@@ -108,6 +110,7 @@ namespace Gilzoide.LottiePlayer
         [ContextMenu("Pause")]
         public void Pause()
         {
+            Debug.Log($"[ImageLottiePlayer] Pause");
             _tokenSource?.Cancel();
             isPlaying = false;
         }
@@ -153,8 +156,8 @@ namespace Gilzoide.LottiePlayer
 
         protected void RecreateAnimationIfNeeded()
         {
-            Debug.Log($"[Debug][ImageLottiePlayer] Anim valid?:{_animation.IsValid()}");
-            if (_animationPath == null) return;
+            Debug.Log($"[Debug][ImageLottiePlayer] Anim valid?:{_animation.IsValid()}, path:{_animationPath}");
+            if (string.IsNullOrEmpty(_animationPath)) return;
             
             if (_animation.IsValid())
             {
@@ -230,7 +233,7 @@ namespace Gilzoide.LottiePlayer
         public void SetPath(string path)
         {
             _animationPath = path;
-            //RecreateAnimationIfNeeded();
+            RecreateAnimationIfNeeded();
         }
 
         public void SetSize(int size)

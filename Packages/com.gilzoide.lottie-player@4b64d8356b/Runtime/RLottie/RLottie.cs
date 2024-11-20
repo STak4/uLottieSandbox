@@ -304,6 +304,7 @@ namespace Gilzoide.LottiePlayer.RLottie
 
         private static void Shutdown()
         {
+            Debug.Log($"[RLottie]Shutdown");
             lottie_shutdown();
             Application.quitting -= Shutdown;
         }

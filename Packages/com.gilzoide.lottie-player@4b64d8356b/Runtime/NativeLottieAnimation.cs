@@ -31,6 +31,7 @@ namespace Gilzoide.LottiePlayer
         {
             if (IsCreated)
             {
+                Debug.Log("[NativeLottieAnimation] Dispose");
                 RLottieCApi.lottie_animation_destroy(NativeHandle);
                 NativeHandle = IntPtr.Zero;
             }

@@ -31,8 +31,8 @@ public class LottieDemo : MonoBehaviour
     public void Add()
     {
         var newPlayer = Instantiate(playerPrefab, playerParent);
-        newPlayer.gameObject.SetActive(false);
         var asset = dropDown.CurrentFile;
+        newPlayer.SetSize(dropDown.CurrentSize);
         newPlayer.SetPath(asset);
         StartCoroutine(PlayRoutine(newPlayer));
         OnUpdateList();
@@ -64,7 +64,6 @@ public class LottieDemo : MonoBehaviour
     IEnumerator PlayRoutine(CustomImageLottiePlayer player)
     {
         yield return null;
-        player.gameObject.SetActive(true);
-        //player.Play();
+        player.Play();
     }
 }
